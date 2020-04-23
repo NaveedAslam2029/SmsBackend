@@ -1,0 +1,140 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var ClientSchema = Schema({
+	fname: 
+	{
+		type:String,
+	},
+	lname: 
+	{
+		type:String,
+	},
+	company: 
+	{
+		type:String,
+	},
+	website: 
+	{
+		type:String,
+	},
+	email:{
+        type:String,
+	},
+	username:
+	{
+        type:String,
+	},
+	password:
+	{
+        type:String,
+	},
+	address1:
+	{
+        type:String,
+	},
+	address2: 
+	{
+		type:String,
+	},
+	state: 
+	{
+		type:String,
+	},
+	city: 
+	{
+		type:String,
+	},
+	postcode: 
+	{
+		type:String,
+	},
+	country: 
+	{
+		type:String,
+	},
+	phone: 
+	{
+		type:String,
+	},
+	image: 
+	{
+		type:String,
+    },
+    datecreated:
+	{
+		type: Date,
+        default: Date.now
+    },
+    sms_limit: 
+	{
+		type:String,
+	},
+    api_access: 
+	{
+		type:String,
+	},
+	api_key: 
+	{
+		type:String,
+	},
+	api_gateway: 
+	{
+		type:String,
+	},
+    online:{
+        type:String,
+	},
+    status:
+	{
+        type:String,
+	},
+	reseller:
+	{
+        type:String,
+	},
+	sms_gateway:
+	{
+        type:String,
+	},
+    lastlogin: 
+	{
+		type:String,
+	},
+	pwresetkey: 
+	{
+		type:String,
+	},
+	pwresetexpiry: 
+	{
+		type:String,
+	},
+    emailnotify: 
+	{
+		type:String,
+	},
+	menu_open: 
+	{
+		type:String,
+	},
+	lan_id: 
+	{
+		type:String,
+	},
+    remember_token: 
+	{
+		type:String,
+    },
+    created_at:
+	{
+		type: Date,
+        default: Date.now
+    },
+    updated_at:{
+		type: Date,
+        default: Date.now
+    }
+
+});
+
+module.exports = mongoose.model('Clients', ClientSchema);
