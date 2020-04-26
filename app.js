@@ -50,7 +50,7 @@ const csvstorage = multer.diskStorage({
       callBack(null,  path.join(__dirname,'uploadscontactlists'))
   },
   filename: (req, file, callBack) => {
-      callBack(null, `csvfile_${file.originalname}`)
+      callBack(null, `${file.originalname}`)
   }
 })
 const contactlist = multer({ storage: csvstorage })
@@ -121,6 +121,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+
 app.use('/user', require('./routes/user_info'));
 app.use('/Client', require('./routes/Sys_Clients'));
 app.use('/Contact', require('./routes/sys_contact_list'));
@@ -137,24 +139,28 @@ app.post('/file', upload.single('file'),  (req, res, next) => {
 })
 app.post('/contactfile',cors(), contactlist.single('file'),  (req, res, next) => {
   let file = req.file;
-  console.log(file);
+  // console.log(file);
   if (!file) {
     const error = new Error('No File')
     error.httpStatusCode = 400
     return next(error)
   }
-  // var data;
+  console.log('file updated');
+  return res.json(file)
+ // var data;
   // var collection = db.collection('Contacts');
-  // readData=fs.createReadStream('csvfile_sms (1).csv').pipe(csv())
+  // var readData=fs.createReadStream('uploadscontactlists/csvfile_sms (1).csv').pipe(csv())
   //              .on('data',function(data){
-  //                 collection.insert({'data': data});
+  //                console.log('data after reading the file',data);
+                 
+  //                 // collection.insert({'data': data});
   //              })
   //              .on('end',function(data){
   //                 console.log('Read finished');
   //              })
 
-  file.filePath = '/contactlists/' + file.filename;  
-  res.send(file);
+  // file.filePath = '/contactlists/' + file.filename;  
+  // res.send(file);
 
 //   file()
 //   .fromFile(csvFilePath)
@@ -221,6 +227,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 
 // app.listen(port,()=>console.log('Server Started At Port',port));
