@@ -2,19 +2,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ClientSchema = Schema({
-	fname: 
+	fname:
 	{
 		type:String,
 	},
-	lname: 
+	lname:
 	{
 		type:String,
 	},
-	company: 
+	company:
 	{
 		type:String,
 	},
-	website: 
+	website:
 	{
 		type:String,
 	},
@@ -33,31 +33,31 @@ var ClientSchema = Schema({
 	{
         type:String,
 	},
-	address2: 
+	address2:
 	{
 		type:String,
 	},
-	state: 
+	state:
 	{
 		type:String,
 	},
-	city: 
+	city:
 	{
 		type:String,
 	},
-	postcode: 
+	postcode:
 	{
 		type:String,
 	},
-	country: 
+	country:
 	{
 		type:String,
 	},
-	phone: 
+	phone:
 	{
 		type:String,
 	},
-	image: 
+	image:
 	{
 		type:String,
     },
@@ -66,19 +66,19 @@ var ClientSchema = Schema({
 		type: Date,
         default: Date.now
     },
-    sms_limit: 
+    sms_limit:
 	{
 		type:String,
 	},
-    api_access: 
+    api_access:
 	{
 		type:String,
 	},
-	api_key: 
+	api_key:
 	{
 		type:String,
 	},
-	api_gateway: 
+	api_gateway:
 	{
 		type:String,
 	},
@@ -97,31 +97,31 @@ var ClientSchema = Schema({
 	{
         type:String,
 	},
-    lastlogin: 
+    lastlogin:
 	{
 		type:String,
 	},
-	pwresetkey: 
+	pwresetkey:
 	{
 		type:String,
 	},
-	pwresetexpiry: 
+	pwresetexpiry:
 	{
 		type:String,
 	},
-    emailnotify: 
+    emailnotify:
 	{
 		type:String,
 	},
-	menu_open: 
+	menu_open:
 	{
 		type:String,
 	},
-	lan_id: 
+	lan_id:
 	{
 		type:String,
 	},
-    remember_token: 
+    remember_token:
 	{
 		type:String,
     },

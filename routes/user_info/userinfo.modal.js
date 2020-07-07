@@ -2,68 +2,76 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userinfoSchema = Schema({
-	fname: 
+	fname:
 	{
-		type:String,
+		type: String,
 	},
-	lname: 
+	lname:
 	{
-		type:String,
+		type: String,
 	},
-	username: 
+	username:
 	{
-		type:String,
+		type: String,
 	},
-	status: 
+	role: {
+		type: String,
+		default: 'basic',
+		enum: ["basic", "supervisor", "admin"]
+	},
+	accessToken: {
+		type: String
+	},
+	status:
 	{
-		type:String,
+		type: String,
 	},
-	image:{
-        type:String,
+	image: {
+		type: String,
 	},
 	lastlogin:
 	{
-        type:String,
+		type: String,
 	},
 	pwresetkey:
 	{
-        type:String,
+		type: String,
 	},
 	pwresetexpirey:
 	{
-        type:String,
+		type: String,
 	},
-	email: 
+	email:
 	{
-		type:String,
+		type: String,
 	},
-	emailntify: 
+	emailntify:
 	{
-		type:String,
+		type: String,
 	},
-	online: 
+	online:
 	{
-		type:String,
+		type: String,
 	},
-	menu_open: 
+	menu_open:
 	{
-		type:String,
+		type: String,
 	},
-	remember_token: 
+	remember_token:
 	{
-		type:String,
+		type: String,
 	},
-	created_at: 
+	created_at:
 	{
-		type:String,
+		type: String,
 	},
-	updated_at: 
+	updated_at:
 	{
-		type:String,
-    },
-    password:
+		type: String,
+	},
+	password:
 	{
-		type:String,
+		type: String,
 	}
 
 });

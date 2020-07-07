@@ -10,12 +10,16 @@ var passport = require("passport");
 const session = require('express-session');
 var multer  = require('multer')
 var path = require('path');
+// new code
+const jwt = require('jsonwebtoken');
+const User = require('./routes/user_info/userinfo.modal')
+// new code end
 var ContactModal = require('./routes/sys_contact_list/contact.Model');
 const fs = require('fs');
 var csv = require('fast-csv');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
-// twillio for send sms 
+// twillio for send sms
 const accountSid = 'AC4ada742e2afc43b9a62deb05e161ef53';
 const authToken = '51b64e280dfc14073918c98e7f30d418';
 const client = require('twilio')(accountSid, authToken);
@@ -28,8 +32,8 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var app = express();
 app.use(cors());
-app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
@@ -70,7 +74,7 @@ const contactlist = multer({ storage: csvstorage })
 
 
 
-// default payload 
+// default payload
 // app.get('/',(res,req)=>{
 // ContactModal.find((err,data)=>{
 //   if(err){
@@ -133,11 +137,45 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*",);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*",);
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
+app.use(async (req, res, next) => {
+  if (req.headers["x-access-token"]) {
+   let accessToken = req.headers["x-access-token"];
+   console.log("user id app 1",accessToken);
+try{
+  const {iat ,exp} = await jwt.verify(accessToken, 'naveedaslambaloach');
+  console.log("user id app",data);
+
+  // Check if token has expired
+  if (exp < Date.now().valueOf() / 1000) {
+    console.log("error",exp);
+
+   return res.status(401).json({
+    error: "JWT token has expired, please login to obtain a new one"
+   });
+  }
+  console.log("res");
+
+ //  res.locals.loggedInUser = iat;
   next();
+}
+catch(e){
+  return res.status(401).json({
+    error: "JWT token has expired, please login to obtain a new one"
+   });
+// console.log("exception",e);
+
+}
+
+  } else {
+   next();
+  }
 });
 
 
@@ -153,8 +191,8 @@ app.post('/file', upload.single('file'),  (req, res, next) => {
     error.httpStatusCode = 400
     return next(error)
   }
-  file.filePath = '/uploads/' + file.filename;  
-  res.send(file);  
+  file.filePath = '/uploads/' + file.filename;
+  res.send(file);
 })
 app.post('/contactfile',cors(), contactlist.single('file'),  (req, res, next) => {
   let file = req.file;
@@ -171,20 +209,20 @@ app.post('/contactfile',cors(), contactlist.single('file'),  (req, res, next) =>
   // var readData=fs.createReadStream('uploadscontactlists/csvfile_sms (1).csv').pipe(csv())
   //              .on('data',function(data){
   //                console.log('data after reading the file',data);
-                 
+
   //                 // collection.insert({'data': data});
   //              })
   //              .on('end',function(data){
   //                 console.log('Read finished');
   //              })
 
-  // file.filePath = '/contactlists/' + file.filename;  
+  // file.filePath = '/contactlists/' + file.filename;
   // res.send(file);
 
 //   file()
 //   .fromFile(csvFilePath)
 //   .then((jsonObj)=>{
-//       console.log(jsonObj); 
+//       console.log(jsonObj);
 //       for (x =0; x<jsonObj; x++){
 // var temp = parseFloat(jsonObj[x].test1);
 // jsonObj[x].test1 = temp;
@@ -222,7 +260,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-//connecting to MongoDB 
+//connecting to MongoDB
 mongoose.connect('mongodb://admin:admin123@ds235658.mlab.com:35658/dashboard',{ useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false});
 console.log('MonogDb is connected')
 mongoose.connection.on('error', function (err) {

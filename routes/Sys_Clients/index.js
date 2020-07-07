@@ -3,8 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 var Clientcontroller = require('./Clients.controller');
 
+var userInfoConroller = require('./../user_info/userinfo.controller');
 
-router.get('/get-all',Clientcontroller.get_all_ClientModals);
+
+router.get('/get-all',Clientcontroller.get_all_ClientModals );
 router.post('/create',Clientcontroller.create_a_ClientModal);
 // router.get('/uploads',Clientcontroller.upload_file_ClientModal);
 // router.get('/upload',Clientcontroller.upload_listfile_ClientModal);
